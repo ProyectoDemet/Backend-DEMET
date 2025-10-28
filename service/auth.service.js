@@ -11,18 +11,28 @@ export const comparePassword = async(password, passwordDb) => {
 }
 
 export const RegisterEmployee = async(name, email, password, rol) => {
-    const result = await pool.query(
-        'INSERT INTO EMPLOYEE(NAME, EMAIL, PASSWORD, ROL) VALUES($1,$2,$3,$4);',
-    [name, email, password, rol]);
-    return result.rows[0];
+    try {
+        const result = await pool.query(
+            'INSERT INTO EMPLOYEE(NAME, EMAIL, PASSWORD, ROL) VALUES($1,$2,$3,$4);',
+        [name, email, password, rol]);
+        return result.rows[0];    
+    } catch (error) {
+        return error.sqlMessage;
+    }
+    
 }
 
 export const findEmail = async(email) => {
-    const result = await pool.query(
-        'SELECT * FROM f_login_employee($1);',
-        [email]
-    );
-    return result.rows[0]
+    try {
+        const result = await pool.query(
+            'SELECT * FROM f_login_employee($1);',
+            [email]
+        );
+        return result.rows[0]    
+    } catch (error) {
+        return error.sqlMessage;
+    }
+    
 }
 
 export const generateAccessToken = (employee) => {

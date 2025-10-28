@@ -1,13 +1,16 @@
 import express from "express"; 
 import cors from 'cors';
 import dotenv from 'dotenv';
+import cookieParser from "cookie-parser";
 import AuthRoutes from './routes/auth.routes.js'
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
-app.use(cors())
+
+app.use(cookieParser());
+app.use(cors());
 // Middleware para interpretar JSON
 app.use(express.json());
 
