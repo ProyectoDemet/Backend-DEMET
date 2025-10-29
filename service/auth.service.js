@@ -13,11 +13,12 @@ export const comparePassword = async(password, passwordDb) => {
 export const RegisterEmployee = async(name, email, password, rol) => {
     try {
         const result = await pool.query(
-            'INSERT INTO EMPLOYEE(NAME, EMAIL, PASSWORD, ROL) VALUES($1,$2,$3,$4);',
-        [name, email, password, rol]);
+            'CALL p_insert_employee($1,$2,$3,$4)',
+            [name, email, password, rol]);
         return result.rows[0];    
     } catch (error) {
-        return error.sqlMessage;
+        //Error Usualmente Proviene de Uso de Emails Repetidos
+        return false;
     }
     
 }
@@ -30,7 +31,7 @@ export const findEmail = async(email) => {
         );
         return result.rows[0]    
     } catch (error) {
-        return error.sqlMessage;
+        return error;
     }
     
 }

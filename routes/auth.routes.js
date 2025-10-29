@@ -10,7 +10,7 @@ const router = express.Router();
  * /intern/signup:
  *   post:
  *     summary: Registrar un nuevo empleado
- *     tags: [Autenticación]
+ *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:
@@ -38,7 +38,31 @@ const router = express.Router();
  *         description: Error de validación
  */
 router.post("/signup", validateSchema(registerSchema), AuthController.register);
-
+/**
+ * @swagger
+ * /intern/login:
+ *   post:
+ *     summary: Iniciar Sesión Cómo Empleado
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: juan@example.com
+ *               password:
+ *                 type: string
+ *                 example: "123456"
+ *     responses:
+ *       201:
+ *         description: token
+ *       400:
+ *         description: Error de Validación
+ */
 router.post("/login", validateSchema(loginSchema), AuthController.login);
 
 export default router;

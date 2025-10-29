@@ -8,7 +8,10 @@ const AuthController = {
             //Servicio de Hasheo de Password
             const hashedPass = await hashed(password);
             //Servicio de Registrar Empleado
-            await RegisterEmployee(name, email, hashedPass, rol);
+            //Obtener False en caso de Errores
+            const error = await RegisterEmployee(name, email, hashedPass, rol);
+            //Verificador -> Sí es error es false
+            if(error == false) return res.status(400).json({error: 'Email en Uso'})
             //Enviar Respuesta
             return res.status(201).json({mensaje: "Registro Exitoso"})
         } catch (error) {
