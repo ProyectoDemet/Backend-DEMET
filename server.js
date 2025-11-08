@@ -5,7 +5,8 @@ import { swaggerDocs } from "./swagger.js";
 import { swaggerSpec } from "./swagger.js";
 import { apiReference } from '@scalar/express-api-reference'
 import cookieParser from "cookie-parser";
-import AuthRoutes from './routes/auth.routes.js'
+import AuthRoutes from './routes/auth.routes.js';
+import partnerRoutes from './routes/partner.route.js';
 
 dotenv.config();
 
@@ -16,8 +17,10 @@ app.use(cookieParser());
 app.use(cors());
 // Middleware para interpretar JSON
 app.use(express.json());
-
+//Routes para Empleados
 app.use('/intern', AuthRoutes);
+//Routes para Gestion Socios
+app.use('/partner/', partnerRoutes)
 
 app.use('/reference', apiReference({
       spec: {

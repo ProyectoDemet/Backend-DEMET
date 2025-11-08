@@ -9,12 +9,12 @@ export const registerSchema = z.object({
     required_error: "El rol es obligatorio",
     invalid_type_error: "Rol inválido. Debe ser 'Administrador' o 'Asistente de Gerencia'"
   })
-});
+}).strict();
 
 //Esquema de Validacion de Datos de Login de Empleados
 export const loginSchema = z.object({
     email: z.string().email("Email Invalido"),
     password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres")
-})
+}).strict();
 
 
