@@ -12,18 +12,10 @@ export const partnerController = {
         } catch (error) {
             //Vista del Error en CMD
             console.log('Error en register.partner.controller: ', error)
-            //Manejo de Errores Personalizados
-            if(error.message.includes('VALORES DUPLICADOS')) {
-                return res.status(400).json({message:"Cedula o Identificador en Uso"})
-            }
-            if(error.message.includes('EMAIL EN USO')) {
-                return res.status(400).json({message:"Correo Electronico en Uso"})
-            }
-            if(error.message.includes('VERIFIQUE VALORES DE CEDULA')) {
-                return res.status(400).json({message:"Numero de Cedula Invalido"})
-            }
-            //Error de Servidor
-            return res.status(500).json({error: error.message})
+            //Obtener de error, el Status del Error, Sí no hubo dato existente, va a usar status(500)
+            const status = error.statusCode || 500;
+            //Retornar Error
+            return res.status(status).json({message: error.message})
         }
     },
     update : async(req, res) => {
@@ -37,18 +29,10 @@ export const partnerController = {
         } catch (error) {
             //Vista del Error en CMD
             console.log('Error en update.partner.controller: ', error)
-            //Manejo de Errores Personalizados
-            if(error.message.includes('VALORES DUPLICADOS')) {
-                return res.status(400).json({message:"Cedula o Identificador en Uso"})
-            }
-            if(error.message.includes('SOCIO NO ENCONTRADO')) {
-                return res.status(400).json({message:"Socio No Encontrado, Porfavor Verifique su Identificador"})
-            }
-            if(error.message.includes('VERIFIQUE VALORES DE CEDULA')) {
-                return res.status(400).json({message:"Numero de Cedula Invalido"})
-            }
-            //Error de Servidor
-            return res.status(500).json({error: error.message})
+            //Obtener de error, el Status del Error, Sí no hubo dato existente, va a usar status(500)
+            const status = error.statusCode || 500;
+            //Retornar Error
+            return res.status(status).json({message: error.message})
         }
     },
     delete : async(req, res) => {
@@ -62,12 +46,10 @@ export const partnerController = {
         } catch (error) {
             //Vista del Error en CMD
             console.log('Error en delete.partner.controller: ', error)
-            //Manejo de Errores Personalizados
-            if(error.message.includes('SOCIO NO ENCONTRADO')) {
-                return res.status(400).json({message:"Socio No Encontrado, Porfavor Verifique su Identificador"})
-            }
-            //Error de Servidor
-            return res.status(500).json({error: error.message})
+            //Obtener de error, el Status del Error, Sí no hubo dato existente, va a usar status(500)
+            const status = error.statusCode || 500;
+            //Retornar Error
+            return res.status(status).json({message: error.message})
         }
     }
 }
