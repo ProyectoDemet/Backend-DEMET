@@ -37,6 +37,27 @@ const router = express.Router();
  *       400:
  *         description: Error de validación
  */
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     EmployeeRegister:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           example: "Juan Pérez"
+ *         email:
+ *           type: string
+ *           example: "juan@example.com"
+ *         password:
+ *           type: string
+ *           example: "123456"
+ *         rol:
+ *           type: string
+ *           enum: ["Administrador", "Asistente de Gerencia"]
+ *           example: "Administrador"
+ */
 router.post("/signup", validateSchema(registerSchema), AuthController.register);
 /**
  * @swagger
@@ -62,6 +83,20 @@ router.post("/signup", validateSchema(registerSchema), AuthController.register);
  *         description: token
  *       400:
  *         description: Error de Validación
+ */
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     EmployeeLogin:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: "juan@example.com"
+ *         password:
+ *           type: string
+ *           example: "123456"
  */
 router.post("/login", validateSchema(loginSchema), AuthController.login);
 
