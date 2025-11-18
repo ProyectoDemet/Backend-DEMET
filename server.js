@@ -10,6 +10,7 @@ import partnerRoutes from './routes/partner.route.js';
 import spaceRoutes from './routes/space.routes.js';
 import rateRoutes from './routes/rate.routes.js';
 import extraRoutes from './routes/extra.route.js';
+import reserveRoutes from './routes/reserve.routes.js';
 
 dotenv.config();
 
@@ -30,6 +31,8 @@ app.use('/space/', spaceRoutes)
 app.use('/rate/', rateRoutes)
 //Routes para Gestion Extras
 app.use('/extra/', extraRoutes)
+//Routes para Gestion Reservas
+app.use('/reserve/', reserveRoutes)
 
 app.use('/reference', apiReference({
       spec: {
