@@ -7,6 +7,8 @@ import { apiReference } from '@scalar/express-api-reference'
 import cookieParser from "cookie-parser";
 import AuthRoutes from './routes/auth.routes.js';
 import partnerRoutes from './routes/partner.route.js';
+import spaceRoutes from './routes/space.routes.js';
+import rateRoutes from './routes/rate.routes.js';
 
 dotenv.config();
 
@@ -21,6 +23,10 @@ app.use(express.json());
 app.use('/intern', AuthRoutes);
 //Routes para Gestion Socios
 app.use('/partner/', partnerRoutes)
+//Routes para Gestion Espacios
+app.use('/space/', spaceRoutes)
+//Routes para Gestion Tarifas
+app.use('/rate/', rateRoutes)
 
 app.use('/reference', apiReference({
       spec: {
