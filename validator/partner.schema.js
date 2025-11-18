@@ -5,7 +5,7 @@ export const partnerSchema = z.object({
     id: z.string(),
     name : z.string(),
     email: z.string().email(),
-    phoneNumber: z.number().positive(),
+    phoneNumber: z.string(),
     cedula: z.number().positive()
 }).strict()
 
