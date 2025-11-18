@@ -167,4 +167,7 @@ router.put('/update', verifyToken, validateSchema(partnerSchema), partnerControl
 //Ruta para Eliminar Socio
 router.delete('/delete', verifyToken, validateSchema(partnerDeleteSchema), partnerController.delete);
 
+
+router.get('/get', verifyToken, partnerController.get);
+
 export default router;

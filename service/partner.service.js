@@ -42,3 +42,16 @@ export const partnerDelete = async(id, email) => {
         errorHandler(error)
     }
 }
+
+//SERVICIO DE OBTENCION DE SOCIOS
+export const getPartner = async() => {
+    try {
+        const result = await pool.query(
+            'SELECT * FROM PARTNER;'
+        );
+        //RETORNAR RESULTADO
+        return result.rows;
+    } catch (error) {
+        errorHandler(error)
+    }
+} 
