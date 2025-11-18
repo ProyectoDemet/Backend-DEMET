@@ -4,7 +4,15 @@ import { AppError } from "./AppError.js";
 export const errorHandler = (error) => {
     //Error 23505 -> Valores Duplicados
     if(error.code == '23505') {
-         throw new AppError('Algun Atributo Unico en Uso', 400)
+        throw new AppError('Algun Atributo Unico en Uso', 400)
+    }
+    //Error de Conexion
+    if (error.code === 'ECONNREFUSED') {
+        throw new AppError("No se pudo conectar con la base de datos", 503);
+    }
+    // Error de formato en PostgreSQL
+    if (error.code === '22P02') { 
+        throw new AppError("Formato de dato inválido", 400);
     }
     //Manejo de Errores Personalizados
     //Son Errores Provenientes de RAISE EXCEPTION de Procedures

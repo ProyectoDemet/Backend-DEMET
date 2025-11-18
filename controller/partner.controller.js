@@ -1,4 +1,4 @@
-import { partnerRegister, partnerUpdate, partnerDelete } from "../service/partner.service.js";
+import { partnerRegister, partnerUpdate, partnerDelete, getPartner } from "../service/partner.service.js";
 
 export const partnerController = {
     register : async(req, res) =>{
@@ -46,6 +46,19 @@ export const partnerController = {
         } catch (error) {
             //Vista del Error en CMD
             console.log('Error en delete.partner.controller: ', error)
+            //Obtener de error, el Status del Error, Sí no hubo dato existente, va a usar status(500)
+            const status = error.statusCode || 500;
+            //Retornar Error
+            return res.status(status).json({message: error.message})
+        }
+    },
+    get : async(req, res) => {
+        try {
+            //Llamado de Servicio de Obtencion de Socios
+            const result = await getPartner();
+            //Retornar Resultado
+            return res.status(200).json({result : result})
+        } catch (error) {
             //Obtener de error, el Status del Error, Sí no hubo dato existente, va a usar status(500)
             const status = error.statusCode || 500;
             //Retornar Error
