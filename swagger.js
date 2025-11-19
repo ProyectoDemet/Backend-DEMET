@@ -5,9 +5,9 @@ const options = {
   definition: {
     openapi: "3.1.0",
     info: {
-      title: "API DEMET - Autenticación",
-      version: "1.0.0",
-      description: "Documentación de endpoints del módulo de autenticación con Express y Zod",
+      title: "API DEMET",
+      version: "4.0.0",
+      description: "Este proyecto implementa una API modular para la gestión de reservas, socios, espacios, tarifas y extras, utilizando Express como framework principal. Cada módulo cuenta con validación estricta mediante Zod, asegurando la integridad de los datos recibidos. El sistema emplea autenticación basada en tokens JWT almacenados en cookies HTTP-only, lo que permite un control de acceso seguro a las rutas protegidas. Además, toda la API está documentada con Swagger/OpenAPI, proporcionando una referencia clara, ordenada y fácilmente consumible para desarrolladores y aplicaciones cliente.",
     },
     servers: [
       {

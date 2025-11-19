@@ -167,7 +167,32 @@ router.put('/update', verifyToken, validateSchema(partnerSchema), partnerControl
 //Ruta para Eliminar Socio
 router.delete('/delete', verifyToken, validateSchema(partnerDeleteSchema), partnerController.delete);
 
-
+/**
+ * @swagger
+ * /partner/get:
+ *   get:
+ *     summary: Obtener la lista completa de socios
+ *     tags: [Partner]
+ *     description: >
+ *       Esta ruta permite obtener todos los socios registrados en el sistema.  
+ *       El usuario debe haber iniciado sesión previamente, ya que el token JWT
+ *       se obtiene automáticamente desde la cookie `access_token`.
+ *     security:
+ *       - cookieAuth: []      # autenticación basada en cookie
+ *     responses:
+ *       200:
+ *         description: Lista de socios obtenida correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Partner'
+ *       401:
+ *         description: Token no enviado o inválido (cookie ausente o expirada)
+ *       500:
+ *         description: Error interno del servidor
+ */
 router.get('/get', verifyToken, partnerController.get);
 
 export default router;
