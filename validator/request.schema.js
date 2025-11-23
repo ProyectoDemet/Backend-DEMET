@@ -13,6 +13,11 @@ export const requestRegisterSchema = z.object({
 	v_fk_rate : z.number().int().positive()
 }).strict()
 
+export const updateStatusSchema = z.object({
+	v_id_request : z.number().int().positive(),
+	v_email :  z.string().email("Email inválido")
+}).strict()
+
 export const idRequestSchema = z.object({
 	v_id_request : z.number().int().positive()
 }).strict()

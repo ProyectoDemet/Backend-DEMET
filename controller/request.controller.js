@@ -1,4 +1,7 @@
 import { requestRegister, updateStatus, requestDelete, get_requests } from "../service/request.service.js";
+import { transporterGmail, mailprepare, sendmail } from "../service/email.service.js";
+import { updateStatusTemplate } from "../util/templates/updateStatus.template.js";
+import { registerRequestTemplate } from "../util/templates/registerRequest.template.js";
 
 export const requestController = {
     register : async(req, res) => {
@@ -7,8 +10,15 @@ export const requestController = {
             const {v_tittle,v_description,v_name,v_email,v_phone_number,v_is_partner,v_pax,v_init_date,v_end_date,v_fk_rate} = await req.body;
             //Llamado al servicio de Registrar Request
             await requestRegister(v_tittle,v_description,v_name,v_email,v_phone_number,v_is_partner,v_pax,v_init_date,v_end_date,v_fk_rate);
+            //Envio de Notificacion Via Email
+            //Llamado al servicio de Creacion de Transportador
+            const transporter = await transporterGmail();
+            //Llamado al servicio de preparacion del Email
+            const mail = await mailprepare(v_email, 'Solicitud Enviada Con Exito', registerRequestTemplate);
+            //Llamado al servicio de envio de Email
+            const result = await sendmail(transporter, mail);
             //Retornar respuesta
-            return res.status(200).json({message:'Request Registrada Exitosamente'})
+            return res.status(200).json({message:'Request Registrada Exitosamente', info:result.accepted})
         } catch (error) {
             //Obtener el Status del Error, o por default 500
             const status = error.statusCode || 500;
@@ -19,11 +29,18 @@ export const requestController = {
     update : async(req, res) => {
         try {
             //Body de la request
-            const {v_id_request} = await req.body;
+            const {v_id_request, v_email} = await req.body;
             //Llamado del Servicio de Actualizacion de Status
             await updateStatus(v_id_request);
+            //Envio de Notificacion Via Email
+            //Llamado al servicio de Creacion de Transportador
+            const transporter = await transporterGmail();
+            //Llamado al servicio de preparacion del Email
+            const mail = await mailprepare(v_email, 'Solicitud En proceso', updateStatusTemplate);
+            //Llamado al servicio de envio de Email
+            const result = await sendmail(transporter, mail);
             //Retornar respuesta
-            return res.status(200).json({message:'Status Actualizado'})
+            return res.status(200).json({message:'Status Actualizado', info:result.accepted})
         } catch (error) {
             //Obtener el Status del Error, o por default 500
             const status = error.statusCode || 500;
