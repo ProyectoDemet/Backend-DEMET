@@ -7,7 +7,8 @@ export const spaceRegisterSchema = z.object({
     v_pax: z.number().int().positive("El número de personas debe ser positivo"),
     v_value4: z.number().positive("El valor por 4 horas debe ser positivo"),
     v_value8: z.number().positive("El valor por 8 horas debe ser positivo"),
-    v_value_extra: z.number().positive("El valor extra debe ser positivo")
+    v_value_extra: z.number().positive("El valor extra debe ser positivo"),
+    v_url_img: z.array(z.string().min(1, "La URL no puede estar vacía")).min(1, "Debe haber al menos una imagen")
 }).strict();
 
 
@@ -18,7 +19,8 @@ export const spaceUpdateSchema = z.object({
     v_pax: z.number().int().positive("El número de personas debe ser positivo"),
     v_value4: z.number().positive("El valor por 4 horas debe ser positivo"),
     v_value8: z.number().positive("El valor por 8 horas debe ser positivo"),
-    v_value_extra: z.number().positive("El valor extra debe ser positivo")
+    v_value_extra: z.number().positive("El valor extra debe ser positivo"),
+    v_url_img: z.array(z.string().min(1, "La URL no puede estar vacía")).min(1, "Debe haber al menos una imagen")
 }).strict();
 
 

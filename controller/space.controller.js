@@ -4,9 +4,9 @@ export const spaceController = {
     register : async(req, res) => {
         try {
             //Body Necesario
-            const {v_name, v_descrip, v_isPartner, v_pax, v_value4, v_value8, v_value_extra} = await req.body;
+            const {v_name, v_descrip, v_isPartner, v_pax, v_value4, v_value8, v_value_extra, v_url_img} = await req.body;
             //Llamado al Servicio de Registro de Espacios
-            await spaceRegister(v_name, v_descrip, v_isPartner, v_pax, v_value4, v_value8, v_value_extra);
+            await spaceRegister(v_name, v_descrip, v_isPartner, v_pax, v_value4, v_value8, v_value_extra, v_url_img);
             //Retornar Respuesta
             return res.status(200).json({message:'Registro Exitoso'})
         } catch (error) {
@@ -19,9 +19,9 @@ export const spaceController = {
     update : async(req, res) => {
         try {
             //Body Necesario
-            const {v_id_rate, v_name, v_descrip, v_pax,v_value4, v_value8, v_value_extra} = await req.body;
+            const {v_id_rate, v_name, v_descrip, v_pax,v_value4, v_value8, v_value_extra, v_url_img} = await req.body;
             //Llamado al Servicio de Actualizacion de Espacios
-            await spaceUpdate(v_id_rate, v_name, v_descrip, v_pax,v_value4, v_value8, v_value_extra);
+            await spaceUpdate(v_id_rate, v_name, v_descrip, v_pax,v_value4, v_value8, v_value_extra, v_url_img);
             //Retornar Respuesta
             return res.status(200).json({message:'Update Exitoso'})
         } catch (error) {

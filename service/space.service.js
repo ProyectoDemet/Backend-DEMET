@@ -2,10 +2,10 @@ import pool from "../lib/db.js";
 import { errorHandler } from "../util/errorHandler.js";
 
 //Servicio de Registro de Espacios
-export const spaceRegister = async(v_name, v_descrip, v_isPartner, v_pax, v_value4, v_value8, v_value_extra) => {
+export const spaceRegister = async(v_name, v_descrip, v_isPartner, v_pax, v_value4, v_value8, v_value_extra, v_url_img) => {
     try {
         await pool.query(
-            'CALL p_insert_space($1,$2,$3,$4,$5,$6,$7);',
+            'CALL p_insert_space($1,$2,$3,$4,$5,$6,$7,$8);',
             [
                 v_name, 
                 v_descrip, 
@@ -13,7 +13,8 @@ export const spaceRegister = async(v_name, v_descrip, v_isPartner, v_pax, v_valu
                 v_pax, 
                 v_value4, 
                 v_value8, 
-                v_value_extra
+                v_value_extra,
+                v_url_img
             ]
         )
     } catch (error) {
@@ -22,10 +23,10 @@ export const spaceRegister = async(v_name, v_descrip, v_isPartner, v_pax, v_valu
 }
 
 //Servicio de Actualizar de Espacios
-export const spaceUpdate = async(v_id_rate,v_name,v_descrip,v_pax,v_value4, v_value8, v_value_extra) => {
+export const spaceUpdate = async(v_id_rate,v_name,v_descrip,v_pax,v_value4, v_value8, v_value_extra, v_url_img) => {
     try {
         await pool.query(
-            'CALL p_update_space($1,$2,$3,$4,$5,$6,$7);',
+            'CALL p_update_space($1,$2,$3,$4,$5,$6,$7,$8);',
             [
                 v_id_rate,
                 v_name,
@@ -33,7 +34,8 @@ export const spaceUpdate = async(v_id_rate,v_name,v_descrip,v_pax,v_value4, v_va
                 v_pax,
                 v_value4, 
                 v_value8, 
-                v_value_extra 
+                v_value_extra,
+                v_url_img
             ]
         )
     } catch (error) {
