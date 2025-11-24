@@ -12,6 +12,7 @@ import rateRoutes from './routes/rate.routes.js';
 import extraRoutes from './routes/extra.route.js';
 import reserveRoutes from './routes/reserve.routes.js';
 import requestRoutes from './routes/request.route.js';
+import reportRoutes from './routes/report.routes.js';
 
 dotenv.config();
 
@@ -36,6 +37,8 @@ app.use('/extra/', extraRoutes)
 app.use('/reserve/', reserveRoutes)
 //Route para Gestion Resquest
 app.use('/request/', requestRoutes)
+//Route para Gestion Reportes
+app.use('/report/', reportRoutes)
 
 app.use('/reference', apiReference({
       spec: {
