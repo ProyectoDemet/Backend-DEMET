@@ -71,3 +71,16 @@ export const get_requests = async() => {
         errorHandler(error)
     }
 }
+
+//Servicio de Cotizacion Automatica
+export const get_price = async(v_end_date,v_init_date,v_fk_rate) => {
+    try {
+        const result = await pool.query(
+            "SELECT calculate_Value($1,$2,$3);",
+            [v_end_date,v_init_date,v_fk_rate]
+        );
+        return result.rows[0]
+    } catch (error) {
+        errorHandler(error)
+    }
+}

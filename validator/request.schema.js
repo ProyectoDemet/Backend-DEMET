@@ -21,3 +21,17 @@ export const updateStatusSchema = z.object({
 export const idRequestSchema = z.object({
 	v_id_request : z.number().int().positive()
 }).strict()
+
+//SCHEMA Obtener Cotizacion
+export const getPriceSchema = z.object({ 
+    v_end_date: z.coerce.date(),
+	v_init_date: z.coerce.date(),
+    v_fk_rate: z.number().int().positive()
+})
+.refine(
+    (data) => data.v_end_date > data.v_init_date,
+    {
+        message: "La fecha final debe ser mayor que la fecha de inicio",
+        path: ["v_end_date"]
+    }
+);

@@ -1,4 +1,4 @@
-import { requestRegister, updateStatus, requestDelete, get_requests } from "../service/request.service.js";
+import { requestRegister, updateStatus, requestDelete, get_requests, get_price } from "../service/request.service.js";
 import { transporterGmail, mailprepare, sendmail } from "../service/email.service.js";
 import { updateStatusTemplate } from "../util/templates/updateStatus.template.js";
 import { registerRequestTemplate } from "../util/templates/registerRequest.template.js";
@@ -67,6 +67,21 @@ export const requestController = {
         try {
             //Llamado al servicio de visualizacion de requests
             const result = await get_requests();
+            //Retornar resultados
+            return res.status(200).json({result: result})
+        } catch (error) {
+            //Obtener el Status del Error, o por default 500
+            const status = error.statusCode || 500;
+            //Retornar Error
+            return res.status(status).json({message:error.message})
+        }
+    },
+    price: async(req, res) => {
+        try {
+            //Body
+            const {v_end_date,v_init_date,v_fk_rate} = await req.body;
+            //Llamado al servicio de Obtencion de Cotizacion
+            const result = await get_price(v_end_date,v_init_date,v_fk_rate);
             //Retornar resultados
             return res.status(200).json({result: result})
         } catch (error) {

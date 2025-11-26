@@ -1,7 +1,7 @@
 import express from 'express';
 import { verifyToken } from '../middleware/verifyToken.js';
 import { validateSchema } from '../middleware/validate.js';
-import { requestRegisterSchema, idRequestSchema, updateStatusSchema } from '../validator/request.schema.js';
+import { requestRegisterSchema, idRequestSchema, updateStatusSchema, getPriceSchema } from '../validator/request.schema.js';
 import { requestController } from '../controller/request.controller.js';
 
 const router = express.Router();
@@ -276,5 +276,8 @@ router.delete('/delete', verifyToken, validateSchema(idRequestSchema), requestCo
  *           example: "Tarifa Base"
  */
 router.get('/get', verifyToken, requestController.get);
+
+//Ruta Obtencion de Cotizacion
+router.post('/price', validateSchema(getPriceSchema), requestController.price);
 
 export default router
