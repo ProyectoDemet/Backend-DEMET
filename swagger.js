@@ -7,15 +7,20 @@ const options = {
     info: {
       title: "API DEMET",
       version: "4.0.0",
-      description: "Este proyecto implementa una API modular para la gestión de reservas, socios, espacios, tarifas y extras, utilizando Express como framework principal. Cada módulo cuenta con validación estricta mediante Zod, asegurando la integridad de los datos recibidos. El sistema emplea autenticación basada en tokens JWT almacenados en cookies HTTP-only, lo que permite un control de acceso seguro a las rutas protegidas. Además, toda la API está documentada con Swagger/OpenAPI, proporcionando una referencia clara, ordenada y fácilmente consumible para desarrolladores y aplicaciones cliente.",
+      description:
+        "Esta API implementa una arquitectura modular para la gestión completa de reservas, espacios, tarifas, extras, socios y solicitudes (requests), utilizando Express como framework principal. " +
+        "Cada ruta aplica validaciones estrictas mediante Zod, garantizando la estructura y el tipo correcto de los datos recibidos. " +
+        "El sistema de autenticación se basa en tokens JWT almacenados en cookies HTTP-only, permitiendo un acceso seguro a las rutas protegidas y evitando exposición en el cliente. " +
+        "La API también incluye generación y descarga de reportes en formato Excel (xlsx), integrando distintos datasets en un único archivo multi-hoja. " +
+        "Toda la documentación se genera automáticamente con Swagger/OpenAPI para proporcionar una referencia clara, organizada y fácil de consumir por desarrolladores y aplicaciones cliente.",
     },
     servers: [
       {
-        url: "http://localhost:3000", 
+        url: "http://localhost:3000",
       },
     ],
   },
-  apis: ["./routes/*.js"], 
+  apis: ["./routes/*.js"],
 };
 
 export const swaggerSpec = swaggerJsDoc(options);

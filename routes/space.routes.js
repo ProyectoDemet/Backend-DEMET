@@ -14,12 +14,13 @@ const router = express.Router();
  *     tags: [Space]
  *     description: >
  *       Esta ruta permite registrar un nuevo espacio disponible en el sistema.  
- *       El usuario debe haber iniciado sesión previamente, ya que el token JWT
- *       es obtenido automáticamente desde la cookie `access_token`.  
- *       Se valida que todos los campos requeridos cumplan con las reglas definidas
- *       en el esquema `SpaceRegister`.
+ *       El usuario debe estar autenticado mediante el token JWT alojado en la cookie
+ *       `access_token`.  
+ *       Todos los campos enviados son validados usando el esquema `SpaceRegister`,  
+ *       incluyendo ahora el arreglo de URLs de imágenes del espacio (`v_url_img`),  
+ *       el cual debe contener al menos una imagen válida.
  *     security:
- *       - cookieAuth: []      # autenticación basada en cookie
+ *       - cookieAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -38,9 +39,9 @@ const router = express.Router();
  *                   type: string
  *                   example: "Espacio Registrado Exitosamente"
  *       400:
- *         description: Error de validación en los datos del espacio
+ *         description: Error de validación en los datos enviados
  *       401:
- *         description: Token no enviado o inválido (cookie ausente o expirada)
+ *         description: Token no enviado, inválido o expirado
  *       500:
  *         description: Error interno del servidor
  */
@@ -51,6 +52,15 @@ const router = express.Router();
  *   schemas:
  *     SpaceRegister:
  *       type: object
+ *       required:
+ *         - v_name
+ *         - v_descrip
+ *         - v_isPartner
+ *         - v_pax
+ *         - v_value4
+ *         - v_value8
+ *         - v_value_extra
+ *         - v_url_img
  *       properties:
  *         v_name:
  *           type: string
@@ -73,8 +83,16 @@ const router = express.Router();
  *         v_value_extra:
  *           type: number
  *           example: 60000
+ *         v_url_img:
+ *           type: array
+ *           description: Lista de URLs de imagenes del espacio (mínimo 1)
+ *           items:
+ *             type: string
+ *             example: "https://midominio.com/imagenes/salon1.jpg"
+ *           example:
+ *             - "https://midominio.com/imagenes/salon1.jpg"
+ *             - "https://midominio.com/imagenes/salon2.jpg"
  */
-
 router.post('/register', verifyToken, validateSchema(spaceRegisterSchema), spaceController.register);
 
 /**
@@ -84,13 +102,13 @@ router.post('/register', verifyToken, validateSchema(spaceRegisterSchema), space
  *     summary: Actualizar información de un espacio existente
  *     tags: [Space]
  *     description: >
- *       Esta ruta permite actualizar los datos de un espacio previamente registrado.  
+ *       Actualiza los datos de un espacio previamente registrado.  
  *       El usuario debe haber iniciado sesión previamente, ya que el token JWT
- *       es obtenido automáticamente desde la cookie `access_token`.  
- *       Se requiere enviar el identificador del espacio junto con los demás datos
- *       que serán actualizados.
+ *       se obtiene automáticamente desde la cookie `access_token`.  
+ *       Es obligatorio enviar el ID del espacio y todos los campos que serán actualizados,
+ *       incluyendo el array con las URLs de imágenes del espacio.
  *     security:
- *       - cookieAuth: []      # autenticación basada en cookie
+ *       - cookieAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -124,9 +142,19 @@ router.post('/register', verifyToken, validateSchema(spaceRegisterSchema), space
  *   schemas:
  *     SpaceUpdate:
  *       type: object
+ *       required:
+ *         - v_id_rate
+ *         - v_name
+ *         - v_descrip
+ *         - v_pax
+ *         - v_value4
+ *         - v_value8
+ *         - v_value_extra
+ *         - v_url_img
  *       properties:
  *         v_id_rate:
  *           type: number
+ *           description: ID del espacio (tarifa asociada)
  *           example: 3
  *         v_name:
  *           type: string
@@ -146,6 +174,15 @@ router.post('/register', verifyToken, validateSchema(spaceRegisterSchema), space
  *         v_value_extra:
  *           type: number
  *           example: 70000
+ *         v_url_img:
+ *           type: array
+ *           description: Arreglo con URLs de imágenes del espacio
+ *           items:
+ *             type: string
+ *             example: "https://mi-servidor.com/uploads/salon1.jpg"
+ *           example:
+ *             - "https://mi-servidor.com/uploads/salon1.jpg"
+ *             - "https://mi-servidor.com/uploads/salon2.jpg"
  */
 router.put('/update', verifyToken, validateSchema(spaceUpdateSchema), spaceController.update);
 
