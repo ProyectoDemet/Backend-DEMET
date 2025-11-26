@@ -1,4 +1,4 @@
-import { spaceRegister, spaceUpdate, spaceDelete, spaceget } from "../service/space.service.js";
+import { spaceRegister, spaceUpdate, spaceDelete, spaceget, occupiedSpaces } from "../service/space.service.js";
 
 export const spaceController = {
     register : async(req, res) => {
@@ -50,6 +50,23 @@ export const spaceController = {
         try {
             //Llamado al Servicio de Obtencion de Espacios
             const result = await spaceget();
+            //Retornar Respuesta
+            return res.status(200).json({result : result})
+        } catch (error) {
+            //Obtener de error, el Status del Error, Sí no hubo dato existente, va a usar status(500)
+            const status = error.statusCode || 500;
+            //Retornar Error
+            return res.status(status).json({message: error.message})
+        }
+    },
+    getOccupiedSpaces : async(req, res)=> {
+        try {
+            //Body
+            const {v_space} = await req.body;
+            //Llamado al Servicio de Obtencion de Espacios
+            const result = await occupiedSpaces(v_space);
+            //Validar Cantidad de Datos Recibidos
+            if(result.length === 0) return res.status(400).json({result : "No hay reservas para este Espacio"})
             //Retornar Respuesta
             return res.status(200).json({result : result})
         } catch (error) {

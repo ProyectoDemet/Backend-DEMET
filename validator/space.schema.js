@@ -27,3 +27,7 @@ export const spaceUpdateSchema = z.object({
 export const spaceDeleteSchema = z.object({
     v_name: z.string().min(1, "El nombre es obligatorio")
 }).strict();
+
+export const occupiedSpacesSchema = z.object({
+    v_space: z.string().min(1, "El nombre es obligatorio")
+}).strict();

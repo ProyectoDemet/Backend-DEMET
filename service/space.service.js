@@ -64,3 +64,15 @@ export const spaceget = async() => {
         errorHandler(error)
     }
 }
+
+export const occupiedSpaces = async(v_space) => {
+    try {
+        const result = await pool.query(
+            'SELECT * FROM occupiedSpaces($1);',
+            [v_space]
+        );
+        return result.rows
+    } catch (error) {
+        errorHandler(error)
+    }
+}

@@ -1,7 +1,7 @@
 import express from 'express';
 import { verifyRol } from '../middleware/rolAccess.js';
 import { validateSchema } from '../middleware/validate.js';
-import { spaceRegisterSchema, spaceDeleteSchema, spaceUpdateSchema } from '../validator/space.schema.js';
+import { spaceRegisterSchema, spaceDeleteSchema, spaceUpdateSchema, occupiedSpacesSchema } from '../validator/space.schema.js';
 import { spaceController } from '../controller/space.controller.js';
 
 const router = express.Router();
@@ -291,5 +291,7 @@ router.delete('/delete', verifyRol, validateSchema(spaceDeleteSchema), spaceCont
  *           example: 60000
  */
 router.get('/get', spaceController.get);
+
+router.post('/occupied', validateSchema(occupiedSpacesSchema), spaceController.getOccupiedSpaces)
 
 export default router
