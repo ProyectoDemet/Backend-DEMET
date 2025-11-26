@@ -2,7 +2,7 @@ import express from 'express';
 import AuthController from "../controller/auth.controller.js";
 import { validateSchema } from '../middleware/validate.js';
 import { registerSchema, loginSchema } from '../validator/auth.schema.js';
-import { verifyToken } from '../middleware/verifyToken.js';
+import { verifyRol } from '../middleware/rolAccess.js';
 
 const router = express.Router();
 
@@ -59,7 +59,7 @@ const router = express.Router();
  *           enum: ["Administrador", "Asistente de Gerencia"]
  *           example: "Administrador"
  */
-router.post("/signup", verifyToken, validateSchema(registerSchema), AuthController.register);
+router.post("/signup", verifyRol, validateSchema(registerSchema), AuthController.register);
 /**
  * @swagger
  * /intern/login:

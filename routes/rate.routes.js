@@ -1,5 +1,5 @@
 import express from 'express';
-import { verifyToken } from '../middleware/verifyToken.js';
+import { verifyRol } from '../middleware/rolAccess.js';
 import { validateSchema } from '../middleware/validate.js';
 import { rateRegisterSchema, rateUpdateSchema, rateDeleteSchema } from '../validator/rate.schema.js';
 import { rateController } from '../controller/rate.controller.js';
@@ -76,7 +76,7 @@ const router = express.Router();
  *           type: number
  *           example: 2
  */
-router.post('/register', verifyToken, validateSchema(rateRegisterSchema), rateController.register);
+router.post('/register', verifyRol, validateSchema(rateRegisterSchema), rateController.register);
 
 /**
  * @swagger
@@ -144,7 +144,7 @@ router.post('/register', verifyToken, validateSchema(rateRegisterSchema), rateCo
  *           type: number
  *           example: 55000
  */
-router.put('/update', verifyToken, validateSchema(rateUpdateSchema), rateController.update);
+router.put('/update', verifyRol, validateSchema(rateUpdateSchema), rateController.update);
 
 /**
  * @swagger
@@ -195,7 +195,7 @@ router.put('/update', verifyToken, validateSchema(rateUpdateSchema), rateControl
  *           type: number
  *           example: 5
  */
-router.delete('/delete', verifyToken, validateSchema(rateDeleteSchema), rateController.delete);
+router.delete('/delete', verifyRol, validateSchema(rateDeleteSchema), rateController.delete);
 
 /**
  * @swagger

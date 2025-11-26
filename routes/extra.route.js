@@ -1,5 +1,5 @@
 import express from 'express';
-import { verifyToken } from '../middleware/verifyToken.js';
+import { verifyRol } from '../middleware/rolAccess.js';
 import { validateSchema } from '../middleware/validate.js';
 import { extraInsertSchema, extraUpdateSchema, extraDeleteSchema } from '../validator/extra.schema.js';
 import { extraController } from '../controller/extra.controller.js';
@@ -62,7 +62,7 @@ const router = express.Router();
  *           type: number
  *           example: 50
  */
-router.post('/register', verifyToken, validateSchema(extraInsertSchema), extraController.register);
+router.post('/register', verifyRol, validateSchema(extraInsertSchema), extraController.register);
 
 /**
  * @swagger
@@ -126,7 +126,7 @@ router.post('/register', verifyToken, validateSchema(extraInsertSchema), extraCo
  *           type: number
  *           example: 20
  */
-router.put('/update', verifyToken, validateSchema(extraUpdateSchema), extraController.update);
+router.put('/update', verifyRol, validateSchema(extraUpdateSchema), extraController.update);
 
 /**
  * @swagger
@@ -181,7 +181,7 @@ router.put('/update', verifyToken, validateSchema(extraUpdateSchema), extraContr
  *           example: 3
  *           description: ID del extra a eliminar
  */
-router.delete('/delete', verifyToken, validateSchema(extraDeleteSchema), extraController.delete);
+router.delete('/delete', verifyRol, validateSchema(extraDeleteSchema), extraController.delete);
 
 /**
  * @swagger
@@ -231,6 +231,6 @@ router.delete('/delete', verifyToken, validateSchema(extraDeleteSchema), extraCo
  *           type: number
  *           example: 50
  */
-router.get('/get', verifyToken, extraController.get);
+router.get('/get', verifyRol, extraController.get);
 
 export default router

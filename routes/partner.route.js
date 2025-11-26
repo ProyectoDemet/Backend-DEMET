@@ -1,5 +1,5 @@
 import express from 'express';
-import { verifyToken } from '../middleware/verifyToken.js';
+import { verifyRol } from '../middleware/rolAccess.js';
 import { validateSchema } from '../middleware/validate.js';
 import { partnerSchema, partnerDeleteSchema } from '../validator/partner.schema.js';
 import { partnerController } from "../controller/partner.controller.js";
@@ -72,7 +72,7 @@ const router = express.Router();
   *           example: 1234567890
   */
 //Ruta para registrar Socio
-router.post('/register', verifyToken, validateSchema(partnerSchema), partnerController.register);
+router.post('/register', verifyRol, validateSchema(partnerSchema), partnerController.register);
 /**
  * @swagger
  * /partner/update:
@@ -112,7 +112,7 @@ router.post('/register', verifyToken, validateSchema(partnerSchema), partnerCont
  *         description: Error interno del servidor
  */
 //Ruta para Actualizar Socio
-router.put('/update', verifyToken, validateSchema(partnerSchema), partnerController.update);
+router.put('/update', verifyRol, validateSchema(partnerSchema), partnerController.update);
 /**
  * @swagger
  * /partner/delete:
@@ -165,7 +165,7 @@ router.put('/update', verifyToken, validateSchema(partnerSchema), partnerControl
  *           example: "carlos.rodriguez@example.com"
  */
 //Ruta para Eliminar Socio
-router.delete('/delete', verifyToken, validateSchema(partnerDeleteSchema), partnerController.delete);
+router.delete('/delete', verifyRol, validateSchema(partnerDeleteSchema), partnerController.delete);
 
 /**
  * @swagger
@@ -193,6 +193,6 @@ router.delete('/delete', verifyToken, validateSchema(partnerDeleteSchema), partn
  *       500:
  *         description: Error interno del servidor
  */
-router.get('/get', verifyToken, partnerController.get);
+router.get('/get', verifyRol, partnerController.get);
 
 export default router;

@@ -1,5 +1,5 @@
 import express from 'express';
-import { verifyToken } from '../middleware/verifyToken.js';
+import { verifyRol } from '../middleware/rolAccess.js';
 import { validateSchema } from '../middleware/validate.js';
 import { spaceRegisterSchema, spaceDeleteSchema, spaceUpdateSchema } from '../validator/space.schema.js';
 import { spaceController } from '../controller/space.controller.js';
@@ -93,7 +93,7 @@ const router = express.Router();
  *             - "https://midominio.com/imagenes/salon1.jpg"
  *             - "https://midominio.com/imagenes/salon2.jpg"
  */
-router.post('/register', verifyToken, validateSchema(spaceRegisterSchema), spaceController.register);
+router.post('/register', verifyRol, validateSchema(spaceRegisterSchema), spaceController.register);
 
 /**
  * @swagger
@@ -184,7 +184,7 @@ router.post('/register', verifyToken, validateSchema(spaceRegisterSchema), space
  *             - "https://mi-servidor.com/uploads/salon1.jpg"
  *             - "https://mi-servidor.com/uploads/salon2.jpg"
  */
-router.put('/update', verifyToken, validateSchema(spaceUpdateSchema), spaceController.update);
+router.put('/update', verifyRol, validateSchema(spaceUpdateSchema), spaceController.update);
 
 /**
  * @swagger
@@ -236,7 +236,7 @@ router.put('/update', verifyToken, validateSchema(spaceUpdateSchema), spaceContr
  *           example: "Salón Principal"
  */
 
-router.delete('/delete', verifyToken, validateSchema(spaceDeleteSchema), spaceController.delete);
+router.delete('/delete', verifyRol, validateSchema(spaceDeleteSchema), spaceController.delete);
 
 /**
  * @swagger

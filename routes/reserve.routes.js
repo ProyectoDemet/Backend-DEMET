@@ -1,5 +1,5 @@
 import express from 'express';
-import { verifyToken } from '../middleware/verifyToken.js';
+import { verifyRol } from '../middleware/rolAccess.js';
 import { validateSchema } from '../middleware/validate.js';
 import { insertReservationSchema, updateReservationSchema, deleteReservationSchema } from '../validator/reserve.schema.js';
 import { reserveController } from '../controller/reserve.controller.js';
@@ -117,7 +117,7 @@ const router = express.Router();
  *         - v_total_value
  *         - v_fk_rate
  */
-router.post('/register', verifyToken, validateSchema(insertReservationSchema), reserveController.register);
+router.post('/register', verifyRol, validateSchema(insertReservationSchema), reserveController.register);
 
 /**
  * @swagger
@@ -231,7 +231,7 @@ router.post('/register', verifyToken, validateSchema(insertReservationSchema), r
  *         - v_total_value
  *         - v_fk_rate
  */
-router.put('/update', verifyToken, validateSchema(updateReservationSchema), reserveController.update);
+router.put('/update', verifyRol, validateSchema(updateReservationSchema), reserveController.update);
 
 /**
  * @swagger
@@ -289,7 +289,7 @@ router.put('/update', verifyToken, validateSchema(updateReservationSchema), rese
  *       required:
  *         - v_id_reservation
  */
-router.delete('/delete', verifyToken, validateSchema(deleteReservationSchema), reserveController.delete);
+router.delete('/delete', verifyRol, validateSchema(deleteReservationSchema), reserveController.delete);
 
 /**
  * @swagger
@@ -381,6 +381,6 @@ router.delete('/delete', verifyToken, validateSchema(deleteReservationSchema), r
  *           type: number
  *           example: 4
  */
-router.get('/get', verifyToken, reserveController.get);
+router.get('/get', verifyRol, reserveController.get);
 
 export default router
