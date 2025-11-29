@@ -277,7 +277,80 @@ router.delete('/delete', verifyToken, validateSchema(idRequestSchema), requestCo
  */
 router.get('/get', verifyToken, requestController.get);
 
-//Ruta Obtencion de Cotizacion
+/**
+ * @swagger
+ * /request/price:
+ *   post:
+ *     summary: Obtiene la cotización estimada según fechas y tarifa.
+ *     tags:
+ *       - Request
+ *     description: >
+ *       Calcula el valor estimado de una reserva basándose en la duración
+ *       (horas entre fecha inicial y final) y la tarifa seleccionada.
+ *       Internamente llama a la función SQL `calculate_value` que determina
+ *       el precio según franjas de horas, valores base y horas extra.
+ *
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - v_init_date
+ *               - v_end_date
+ *               - v_fk_rate
+ *             properties:
+ *               v_init_date:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-01-10T10:00:00.000Z"
+ *                 description: Fecha y hora de inicio del evento.
+ *               v_end_date:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-01-10T18:00:00.000Z"
+ *                 description: Fecha y hora de fin del evento.
+ *               v_fk_rate:
+ *                 type: integer
+ *                 example: 2
+ *                 description: ID de la tarifa que se usará para calcular el valor.
+ *
+ *     responses:
+ *       200:
+ *         description: Cotización generada con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: number
+ *                   example: 450000
+ *                   description: Valor calculado según la duración y tarifa.
+ *
+ *       400:
+ *         description: Error de validación o fechas inconsistentes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "INCONGRUENCIA EN LAS FECHAS"
+ *
+ *       500:
+ *         description: Error interno inesperado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Error interno del servidor"
+ */
 router.post('/price', validateSchema(getPriceSchema), requestController.price);
 
 export default router

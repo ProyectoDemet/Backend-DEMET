@@ -292,6 +292,75 @@ router.delete('/delete', verifyRol, validateSchema(spaceDeleteSchema), spaceCont
  */
 router.get('/get', spaceController.get);
 
-router.post('/occupied', validateSchema(occupiedSpacesSchema), spaceController.getOccupiedSpaces)
+/**
+ * @swagger
+ * /space/occupied:
+ *   post:
+ *     tags:
+ *       - Space
+ *     summary: Obtener fechas ocupadas según el espacio
+ *     description: >
+ *       Retorna todas las reservas asociadas a un espacio específico, incluyendo el ID de la reserva,
+ *       fecha de inicio y fecha de finalización.  
+ *       Si no existen reservas para el espacio solicitado, retornará un mensaje informativo.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               v_space:
+ *                 type: string
+ *                 example: "SALÓN SOCIAL"
+ *                 description: Nombre del espacio a consultar.
+ *             required:
+ *               - v_space
+ *     responses:
+ *       200:
+ *         description: Lista de reservas encontradas para el espacio.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       ID_RESERVATION:
+ *                         type: string
+ *                         example: "RE001"
+ *                       INIT_DATE:
+ *                         type: string
+ *                         format: date-time
+ *                         example: "2025-01-15T10:00:00.000Z"
+ *                       END_DATE:
+ *                         type: string
+ *                         format: date-time
+ *                         example: "2025-01-15T18:00:00.000Z"
+ *       400:
+ *         description: El espacio no tiene reservas registradas o error en la solicitud.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: string
+ *                   example: "No hay reservas para este Espacio"
+ *       500:
+ *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Error interno del servidor"
+ */
+router.post('/occupied', validateSchema(occupiedSpacesSchema), spaceController.getOccupiedSpaces);
 
 export default router
