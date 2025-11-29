@@ -52,7 +52,7 @@ const AuthController = {
             //Validar Integridad del Refresh Token
             const decoded = verifyRefreshToken(refreshToken);
             //Crear Payload 
-            const payload = {id_employee: decoded.id_employee, role: decoded.role};
+            const payload = {id_employee: decoded.id_employee, rol: decoded.role};
             //Generar nuevo Access Token
             const token = generateAccessToken(payload);
             //Asignar token a una Cookie
