@@ -50,6 +50,6 @@ app.use('/reference', apiReference({
 swaggerDocs(app);
 
 // Iniciar servidor
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
