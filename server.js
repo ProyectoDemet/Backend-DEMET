@@ -16,7 +16,7 @@ import reportRoutes from './routes/report.routes.js';
 
 dotenv.config();
 
-const app = express();
+const app = express() || 3000;
 const PORT = process.env.PORT;
 
 app.use(cookieParser());
