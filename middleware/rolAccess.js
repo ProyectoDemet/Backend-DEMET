@@ -11,7 +11,7 @@ export const verifyRol = (req, res, next) => {
         if(err) return res.status(401).send({auth:false, message:'Token Invalido o Expirado'});
         //Sí todo sale bien, se envían los datos en formato JSON dentro de: decoded
         //Validar Rol de Usuario
-        if(decoded.role != "Administrador") return res.status(401).send({auth:false, message:'Usuario/Rol No Autorizado'});
+        if(decoded.role != "Administrador") return res.status(401).send({auth:false, message:'Usuario/Rol No Autorizado', role: decoded.role});
         //Asignar los datos en formato JSON en req.user
         req.user = decoded;
         //Dejarlo Seguir Sí es un Administrador

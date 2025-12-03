@@ -10,7 +10,8 @@ export const requestRegisterSchema = z.object({
 	v_pax : z.number().int().positive(),
 	v_init_date: z.coerce.date(),
 	v_end_date: z.coerce.date(),
-	v_fk_rate : z.number().int().positive()
+	v_fk_rate : z.number().int().positive(),
+	v_value: z.number().positive()
 }).strict()
 
 export const updateStatusSchema = z.object({

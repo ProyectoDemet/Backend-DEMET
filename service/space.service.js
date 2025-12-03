@@ -65,6 +65,19 @@ export const spaceget = async() => {
     }
 }
 
+//Servicio de Obtencion de Nombre del Espacio Segun ID de Tarifa
+export const spaceNameByRate = async(id_rate) => {
+    try {
+        const result = await pool.query(
+            'SELECT name FROM get_spaces WHERE id_rate = ($1) LIMIT 1;',
+            [id_rate]
+        );
+        return result.rows[0]
+    } catch (error) {
+        errorHandler(error)
+    }
+}
+
 export const occupiedSpaces = async(v_space) => {
     try {
         const result = await pool.query(

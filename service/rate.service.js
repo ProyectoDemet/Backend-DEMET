@@ -1,3 +1,4 @@
+import { id } from "zod/locales";
 import pool from "../lib/db.js";
 import { errorHandler } from "../util/errorHandler.js";
 
@@ -72,6 +73,19 @@ export const rateget = async() => {
             'SELECT * FROM get_rates;'
         );
         return result.rows
+    } catch (error) {
+        errorHandler(error)
+    }
+}
+
+//Servicio de Obtencion de Nombre de Tarifa por ID
+export const nameRateById = async(id_rate) => {
+    try {
+        const result = await pool.query(
+            'SELECT tarifa FROM get_rates WHERE ID_RATE = ($1) LIMIT 1;',
+            [id_rate]
+        );
+        return result.rows[0]
     } catch (error) {
         errorHandler(error)
     }

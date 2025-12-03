@@ -20,7 +20,10 @@ const app = express() || 3000;
 const PORT = process.env.PORT;
 
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials:true
+}));
 // Middleware para interpretar JSON
 app.use(express.json());
 //Routes para Empleados
