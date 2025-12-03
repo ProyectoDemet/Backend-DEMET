@@ -55,3 +55,17 @@ export const getPartner = async() => {
         errorHandler(error)
     }
 } 
+
+//SERVICIO VERIFICACION DE SOCIO
+export const isPartner = async(idPartner) => {
+    try {
+        const result = await pool.query(
+            'SELECT verify_partner($1);',
+            [idPartner]
+        );
+        //RETORNAR RESULTADO
+        return result.rows[0];
+    } catch (error) {
+        errorHandler(error)
+    }
+} 

@@ -14,3 +14,8 @@ export const partnerDeleteSchema = z.object({
     id: z.string(),
     email: z.string().email()
 }).strict()
+
+//Esquema Validacion de ID
+export const partnerIdSchema = z.object({
+    v_idPartner: z.string(),
+}).strict()

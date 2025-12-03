@@ -1,7 +1,7 @@
 import express from 'express';
 import { verifyRol } from '../middleware/rolAccess.js';
 import { validateSchema } from '../middleware/validate.js';
-import { partnerSchema, partnerDeleteSchema } from '../validator/partner.schema.js';
+import { partnerSchema, partnerDeleteSchema, partnerIdSchema } from '../validator/partner.schema.js';
 import { partnerController } from "../controller/partner.controller.js";
 
 const router = express.Router();
@@ -194,5 +194,7 @@ router.delete('/delete', verifyRol, validateSchema(partnerDeleteSchema), partner
  *         description: Error interno del servidor
  */
 router.get('/get', verifyRol, partnerController.get);
+
+router.post('/verify', validateSchema(partnerIdSchema), partnerController.verify);
 
 export default router;

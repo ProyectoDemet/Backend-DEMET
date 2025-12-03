@@ -1,6 +1,7 @@
 import pool from "../lib/db.js";
 import bcrypt from "bcrypt";
 import JWT from 'jsonwebtoken';
+import { errorHandler } from "../util/errorHandler.js";
 
 //Servicio de Hashear Passwords
 export const hashed = async(password) => {
@@ -23,6 +24,18 @@ export const RegisterEmployee = async(name, email, password, rol) => {
     }
     
 }
+
+//Servicio de Obtencion de Empleados
+export const getEmployees = async() => {
+    try {
+        const result = await pool.query(
+            'SELECT * FROM get_employees;');
+        return result.rows;    
+    } catch (error) {
+        errorHandler(error);
+    }
+}
+
 //Servicio de Encontrar el email solicitado en la base de datos
 export const findEmail = async(email) => {
     try {

@@ -1,4 +1,4 @@
-import { partnerRegister, partnerUpdate, partnerDelete, getPartner } from "../service/partner.service.js";
+import { partnerRegister, partnerUpdate, partnerDelete, getPartner, isPartner } from "../service/partner.service.js";
 
 export const partnerController = {
     register : async(req, res) =>{
@@ -58,6 +58,23 @@ export const partnerController = {
             const result = await getPartner();
             //Retornar Resultado
             return res.status(200).json({result : result})
+        } catch (error) {
+            //Obtener de error, el Status del Error, Sí no hubo dato existente, va a usar status(500)
+            const status = error.statusCode || 500;
+            //Retornar Error
+            return res.status(status).json({message: error.message})
+        }
+    },
+    verify : async(req, res) => {
+        try {
+            //Body
+            const {v_idPartner} = await req.body;
+            //Llamado al Servicio Verificador de Socios
+            const result =  await isPartner(v_idPartner);
+            //Retornar Resultado Si es False
+            if(!result.verify_partner) return res.status(401).json({message: "Socio No Encontrado", result : result.verify_partner});
+            //Retornar Resultado Exitoso
+            return res.status(200).json({result : result.verify_partner})
         } catch (error) {
             //Obtener de error, el Status del Error, Sí no hubo dato existente, va a usar status(500)
             const status = error.statusCode || 500;

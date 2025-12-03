@@ -175,4 +175,6 @@ router.get("/refresh", AuthController.refresh);
  */
 router.get("/logout", AuthController.logout);
 
+router.get('/get', verifyRol, AuthController.get);
+
 export default router;

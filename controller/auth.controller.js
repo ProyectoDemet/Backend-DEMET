@@ -1,5 +1,5 @@
 import { decode } from "jsonwebtoken";
-import { RegisterEmployee, findEmail, hashed, comparePassword, generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../service/auth.service.js";
+import { RegisterEmployee, findEmail, hashed, comparePassword, generateAccessToken, generateRefreshToken, verifyRefreshToken, getEmployees } from "../service/auth.service.js";
 
 const AuthController = {
     register : async(req, res) => {
@@ -17,6 +17,19 @@ const AuthController = {
             return res.status(201).json({mensaje: "Registro Exitoso"})
         } catch (error) {
             return res.status(400).json({error: error})
+        }
+    },
+    get : async(req, res) => {
+        try {
+            //Llamado al Servicio de Obtencion de Empleados
+            const result = await getEmployees();
+            //Retornar Respuesta
+            return res.status(200).json({result : result})
+        } catch (error) {
+            //Obtener de error, el Status del Error, Sí no hubo dato existente, va a usar status(500)
+            const status = error.statusCode || 500;
+            //Retornar Error
+            return res.status(status).json({message: error.message})
         }
     },
     login: async(req, res) => {
