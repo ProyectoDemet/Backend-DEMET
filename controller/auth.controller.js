@@ -1,4 +1,3 @@
-import { decode } from "jsonwebtoken";
 import { RegisterEmployee, findEmail, hashed, comparePassword, generateAccessToken, generateRefreshToken, verifyRefreshToken, getEmployees } from "../service/auth.service.js";
 
 const AuthController = {
@@ -30,6 +29,16 @@ const AuthController = {
             const status = error.statusCode || 500;
             //Retornar Error
             return res.status(status).json({message: error.message})
+        }
+    },
+    me : async(req, res) => {
+        try {
+            //Validar Existencia
+            if(req.user.role == null) return res.status(404).json({message: "Rol Not Found"})
+            //Retornar Rol de Usuario
+            return res.status(201).json({rol : req.user.role})
+        } catch (error) {
+            return res.status(400).json({error: error})
         }
     },
     login: async(req, res) => {
