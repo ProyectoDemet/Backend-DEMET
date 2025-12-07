@@ -1,6 +1,7 @@
 import { requestRegister, updateStatus, requestDelete, get_requests, get_price } from "../service/request.service.js";
 import { spaceNameByRate } from "../service/space.service.js";
 import { nameRateById } from "../service/rate.service.js";
+import { getAdminEmployee } from "../service/auth.service.js";
 import { transporterGmail, mailprepare, sendmail } from "../service/email.service.js";
 import { updateStatusTemplate } from "../util/templates/updateStatus.template.js";
 import { registerRequestTemplate } from "../util/templates/registerRequest.template.js";
@@ -17,13 +18,15 @@ export const requestController = {
             const v_nameSpace = await spaceNameByRate(v_fk_rate);
             //Obtener Nombre de Tarifa por medio del Id de la tarifa
             const v_nameRate = await nameRateById(v_fk_rate);
+            //Obtener Email de Administrador
+            const v_emailAdmin = await getAdminEmployee();  
             //Envio de Notificacion Via Email
             //Llamado al servicio de Creacion de Transportador
             const transporter = await transporterGmail();
             //Llamado al servicio de preparacion del Email para Cliente
             const mail = await mailprepare(v_email, 'Solicitud Enviada Con Exito', await registerRequestTemplate(v_name, v_pax, v_init_date, v_end_date, v_value, v_nameSpace.name, v_nameRate.tarifa));
             //Llamado al servicio de preparacion del Email para Administrador
-            const adminMail = await mailprepare(v_email, 'Nueva Solicitud', await adminNotifyRequestTemplate(v_name, v_phone_number, v_pax, v_init_date, v_end_date, v_value, v_nameSpace.name, v_nameRate.tarifa));
+            const adminMail = await mailprepare(v_emailAdmin.email, 'Nueva Solicitud', await adminNotifyRequestTemplate(v_name, v_phone_number, v_pax, v_init_date, v_end_date, v_value, v_nameSpace.name, v_nameRate.tarifa));
             //Llamado al servicio de envio de Email Para Cliente
             const result = await sendmail(transporter, mail);
             //Llamado al servicio de envio de Email Para Cliente

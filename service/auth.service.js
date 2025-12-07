@@ -36,6 +36,28 @@ export const getEmployees = async() => {
     }
 }
 
+//Servicio de Obtencion de Empleados by Id
+/*
+    Este Email está pensado para:
+        1. Ser receptor de correos
+        2. Validar Integridad de Emails dentro de la DB
+*/
+export const getAdminEmployee = async() => {
+    try {
+        const result = await pool.query(
+            `
+            SELECT email 
+            FROM get_employees
+            WHERE EMAIL = ($1)
+            AND ROL = 'Administrador'
+            LIMIT 1;
+            `, [process.env.EMAIL_ADMIN]);
+        return result.rows[0];  
+    } catch (error) {
+        errorHandler(error);
+    }
+}
+
 //SERVICIO UPDATE EMPLOYEE
 export const updateEmployee = async(id_employee, email, rol) => {
     try {

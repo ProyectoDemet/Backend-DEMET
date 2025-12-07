@@ -1,6 +1,14 @@
 export const adminNotifyRequestTemplate = async (nameClient, phoneClient, pax, initDate, endDate, value, nameSpace, nameRate) => {
   const deposit = (value / 2).toLocaleString("es-CO");
 
+  const whatsappAdminMessage = encodeURIComponent(`
+  Hola ${nameClient}, soy el administrador del Club El Meta. 
+  He visto tu solicitud para el espacio ${nameSpace} el día ${initDate} hasta ${endDate}. 
+  Me gustaría confirmar algunos detalles de la reserva, conversar sobre precios y saber si deseas visitar nuestras instalaciones antes de continuar con el proceso. 
+  Quedo atento para coordinar contigo. ¡Gracias!
+  `);
+
+
   return `
   <!DOCTYPE html>
   <html>
@@ -92,7 +100,7 @@ export const adminNotifyRequestTemplate = async (nameClient, phoneClient, pax, i
 
                 <!-- BOTÓN WHATSAPP -->
                 <div style="text-align:center; margin:30px 0;">
-                  <a href="https://wa.me/57${phoneClient}"
+                  <a href="https://wa.me/57${phoneClient}?text=${whatsappAdminMessage}" target="_blank"
                     style="
                       background-color:#0cb64a;
                       color:white;
@@ -105,7 +113,7 @@ export const adminNotifyRequestTemplate = async (nameClient, phoneClient, pax, i
                     Contactar Cliente por WhatsApp
                   </a>
                 </div>
-
+                
                 <!-- BOTÓN PANEL ADMIN -->
                 <div style="text-align:center; margin-top:10px;">
                   <a href="#"

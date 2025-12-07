@@ -1,6 +1,11 @@
 export const registerRequestTemplate = async (nameClient, pax, initDate, endDate, value, nameSpace, nameRate) => {
   const deposit = (value / 2).toLocaleString("es-CO");
 
+  //Mensaje WhatsApp
+  const whatsappMessage = encodeURIComponent(
+  `Buen día, mi nombre es ${nameClient}. He realizado una solicitud de reserva del espacio ${nameSpace}, programada para el periodo comprendido entre ${initDate} y ${endDate}. Agradezco si podemos establecer comunicación para revisar y coordinar los detalles correspondientes. Muchas gracias.`
+  );
+
   return `
   <!DOCTYPE html>
   <html>
@@ -88,15 +93,15 @@ export const registerRequestTemplate = async (nameClient, pax, initDate, endDate
                 <!-- AVISO PARA CONTACTAR AL ADMIN -->
                 <div style="background:#e6f3ff; border-left:6px solid #1b6ec2; padding:15px; border-radius:6px; margin-bottom:25px;">
                   <p style="margin:0; font-size:15px;">
-                    <strong>Nota importante:</strong> Después de hacer el abono, debes contactar 
-                    <strong>directamente al administrador por WhatsApp</strong> para enviar el comprobante
-                    y finalizar el proceso de reserva.
+                    <strong>Nota importante:</strong> Antes de efectuar el abono inicial, es indispensable comunicarse 
+                    con el administrador vía WhatsApp para validar la información, ajustar detalles y confirmar el 
+                    valor definitivo de la reserva.
                   </p>
                 </div>
 
                 <!-- BOTÓN WHATSAPP -->
                 <div style="text-align:center; margin:30px 0;">
-                  <a href="https://wa.me/573103330880" target="_blank"
+                  <a href="https://wa.me/573103330880?text=${whatsappMessage}" target="_blank"
                     style="
                       background-color:#0cb64a;
                       color:white;
