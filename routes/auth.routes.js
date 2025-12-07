@@ -3,6 +3,7 @@ import AuthController from "../controller/auth.controller.js";
 import { validateSchema } from '../middleware/validate.js';
 import { registerSchema, loginSchema, deleteSchema, updateSchema } from '../validator/auth.schema.js';
 import { verifyRol } from '../middleware/rolAccess.js';
+import { verifyToken } from '../middleware/verifyToken.js';
 
 const router = express.Router();
 
@@ -304,7 +305,7 @@ router.get('/get', verifyRol, AuthController.get);
  *                   example: "Internal Server Error"
  */
 
-router.get('/me', verifyRol, AuthController.me);
+router.get('/me', verifyToken, AuthController.me);
 
 /**
  * @swagger

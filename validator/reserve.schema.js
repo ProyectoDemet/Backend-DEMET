@@ -2,7 +2,7 @@ import { z } from "zod";
 
 //SCHEMA RESERVAS REGISTER
 export const insertReservationSchema = z.object({
-    v_id_reservation: z.string().max(10),
+    v_id_reservation: z.string().min(1).max(10),
     v_name: z.string().min(1),
     v_email: z
         .string()
