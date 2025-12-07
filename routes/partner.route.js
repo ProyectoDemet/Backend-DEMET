@@ -195,6 +195,60 @@ router.delete('/delete', verifyRol, validateSchema(partnerDeleteSchema), partner
  */
 router.get('/get', verifyRol, partnerController.get);
 
+/**
+ * @swagger
+ * /partner/verify:
+ *   post:
+ *     summary: Verificar si un usuario es socio activo
+ *     tags: [Partner]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - v_idPartner
+ *             properties:
+ *               v_idPartner:
+ *                 type: string
+ *                 example: "123456789"
+ *                 description: ID del socio a verificar.
+ *     responses:
+ *       200:
+ *         description: Socio verificado exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *       401:
+ *         description: Socio no encontrado o no válido.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Socio No Encontrado"
+ *                 result:
+ *                   type: boolean
+ *                   example: false
+ *       500:
+ *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Error inesperado en el servidor"
+ */
 router.post('/verify', validateSchema(partnerIdSchema), partnerController.verify);
 
 export default router;
