@@ -1,4 +1,4 @@
-import { RegisterEmployee, findEmail, hashed, comparePassword, generateAccessToken, generateRefreshToken, verifyRefreshToken, getEmployees } from "../service/auth.service.js";
+import { RegisterEmployee, updateEmployee, deleteEmployee, findEmail, hashed, comparePassword, generateAccessToken, generateRefreshToken, verifyRefreshToken, getEmployees, verifyAccessToken } from "../service/auth.service.js";
 
 const AuthController = {
     register : async(req, res) => {
@@ -18,6 +18,36 @@ const AuthController = {
             return res.status(400).json({error: error})
         }
     },
+    update : async(req, res) => {
+        try {
+            //Datos a Actualizar del Empleado
+            const {v_idEmployee, email, rol} = await req.body;
+            //Servicio de Actualizar Empleado
+            await updateEmployee(v_idEmployee, email, rol);
+            //Enviar Respuesta
+            return res.status(201).json({mensaje: "Update Exitoso"})
+        } catch (error) {
+            //Obtener de error, el Status del Error, Sí no hubo dato existente, va a usar status(500)
+            const status = error.statusCode || 500;
+            //Retornar Error
+            return res.status(status).json({message: error.message})
+        }
+    },
+    delete : async(req, res) => {
+        try {
+            //Datos para Eliminar Empleado
+            const {v_idEmployee} = await req.body;
+            //Servicio de Eliminar Empleado
+            await deleteEmployee(v_idEmployee);
+            //Enviar Respuesta
+            return res.status(201).json({mensaje: "Delete Exitoso"})
+        } catch (error) {
+            //Obtener de error, el Status del Error, Sí no hubo dato existente, va a usar status(500)
+            const status = error.statusCode || 500;
+            //Retornar Error
+            return res.status(status).json({message: error.message})
+        }
+    },
     get : async(req, res) => {
         try {
             //Llamado al Servicio de Obtencion de Empleados
@@ -33,10 +63,10 @@ const AuthController = {
     },
     me : async(req, res) => {
         try {
-            //Validar Existencia
-            if(req.user.role == null) return res.status(404).json({message: "Rol Not Found"})
+            const {token} = await req.body;
+            const decoded = verifyAccessToken(token)
             //Retornar Rol de Usuario
-            return res.status(201).json({rol : req.user.role})
+            return res.status(201).json(decoded)
         } catch (error) {
             return res.status(400).json({error: error})
         }
