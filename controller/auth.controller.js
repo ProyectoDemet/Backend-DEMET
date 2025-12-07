@@ -21,9 +21,9 @@ const AuthController = {
     update : async(req, res) => {
         try {
             //Datos a Actualizar del Empleado
-            const {v_idEmployee, email, rol} = await req.body;
+            const {v_idEmployee, v_email, v_rol} = await req.body;
             //Servicio de Actualizar Empleado
-            await updateEmployee(v_idEmployee, email, rol);
+            await updateEmployee(v_idEmployee, v_email, v_rol);
             //Enviar Respuesta
             return res.status(201).json({mensaje: "Update Exitoso"})
         } catch (error) {
@@ -63,10 +63,8 @@ const AuthController = {
     },
     me : async(req, res) => {
         try {
-            const {token} = await req.body;
-            const decoded = verifyAccessToken(token)
             //Retornar Rol de Usuario
-            return res.status(201).json(decoded)
+            return res.status(201).json({role : req.user.role})
         } catch (error) {
             return res.status(400).json({error: error})
         }

@@ -1,7 +1,7 @@
 import express from 'express';
 import AuthController from "../controller/auth.controller.js";
 import { validateSchema } from '../middleware/validate.js';
-import { registerSchema, loginSchema } from '../validator/auth.schema.js';
+import { registerSchema, loginSchema, deleteSchema, updateSchema } from '../validator/auth.schema.js';
 import { verifyRol } from '../middleware/rolAccess.js';
 
 const router = express.Router();
@@ -178,5 +178,9 @@ router.get("/logout", AuthController.logout);
 router.get('/get', verifyRol, AuthController.get);
 
 router.get('/me', verifyRol, AuthController.me);
+
+router.put('/update', verifyRol, validateSchema(updateSchema), AuthController.update);
+
+router.delete('/delete', verifyRol, validateSchema(deleteSchema), AuthController.delete);
 
 export default router;

@@ -36,6 +36,30 @@ export const getEmployees = async() => {
     }
 }
 
+//SERVICIO UPDATE EMPLOYEE
+export const updateEmployee = async(id_employee, email, rol) => {
+    try {
+        const result = await pool.query(
+            'CALL p_update_employee($1,$2,$3)',
+            [id_employee, email, rol]);
+        return result.rows[0];    
+    } catch (error) {
+        errorHandler(error);
+    }
+}
+
+//SERVICIO DELETE EMPLOYEE
+export const deleteEmployee = async(id_employee) => {
+    try {
+        const result = await pool.query(
+            'CALL p_delete_employee($1)',
+            [id_employee]);
+        return result.rows[0];    
+    } catch (error) {
+        errorHandler(error);
+    }
+}
+
 //Servicio de Encontrar el email solicitado en la base de datos
 export const findEmail = async(email) => {
     try {
