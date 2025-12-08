@@ -86,13 +86,13 @@ const AuthController = {
             const refreshToken = generateRefreshToken(employeeData)
             //Envío de Tokens Mediante una Cookies
             res.cookie("access_token", token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: true,         // obligatorio en producción (https)
             sameSite: "none"    // permite enviar cookies cross-site
             });
 
             res.cookie("refresh_token", refreshToken, {
-            httpOnly: true,
+            httpOnly: false,
             secure: true,
             sameSite: "none"
             });
@@ -116,7 +116,7 @@ const AuthController = {
             const token = generateAccessToken(payload);
             //Asignar token a una Cookie
             res.cookie("access_token", token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: true,         // obligatorio en producción (https)
             sameSite: "none"    // permite enviar cookies cross-site
             });
