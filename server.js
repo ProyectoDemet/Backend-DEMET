@@ -22,8 +22,11 @@ const PORT = process.env.PORT;
 
 app.use(cookieParser());
 app.use(cors({
-    origin: "https://clubmetabros.vercel.app",
-    credentials:true
+  origin: [
+    "https://clubmetabros.vercel.app",
+    "http://localhost:3000"
+  ],
+  credentials: true
 }));
 // Middleware para interpretar JSON
 app.use(express.json());
