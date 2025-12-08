@@ -85,8 +85,17 @@ const AuthController = {
             const token = generateAccessToken(employeeData)
             const refreshToken = generateRefreshToken(employeeData)
             //Envío de Tokens Mediante una Cookies
-            res.cookie("access_token", token);
-            res.cookie("refresh_token", refreshToken);
+            res.cookie("access_token", token, {
+            httpOnly: true,
+            secure: true,         // obligatorio en producción (https)
+            sameSite: "none"    // permite enviar cookies cross-site
+            });
+
+            res.cookie("refresh_token", refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+            });
             //Reporte de Acceso Exitoso
             return res.status(200).send({auth: true})
         } catch (error) {
@@ -106,7 +115,11 @@ const AuthController = {
             //Generar nuevo Access Token
             const token = generateAccessToken(payload);
             //Asignar token a una Cookie
-            res.cookie("access_token", token);
+            res.cookie("access_token", token, {
+            httpOnly: true,
+            secure: true,         // obligatorio en producción (https)
+            sameSite: "none"    // permite enviar cookies cross-site
+            });
             //Retornar Respuesta
             return res.status(200).send({message: "Access token renovado"})
         } catch (error) {
