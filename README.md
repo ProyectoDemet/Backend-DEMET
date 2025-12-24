@@ -49,8 +49,8 @@ El proyecto está diseñado siguiendo principios de **separación de responsabil
 ### 1️⃣ Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/backend-demet.git
-cd backend-demet
+https://github.com/ProyectoDemet/Backend-DEMET.git
+cd Backend-DEMET
 ```
 
 ### 2️⃣ Instalar dependencias
