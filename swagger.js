@@ -16,8 +16,13 @@ const options = {
     },
     servers: [
       {
-        url: "https://backdemet.bskcfv.online",
+        url: "http://localhost:3002",
+        description: "Servidor de desarrollo (local)"
       },
+      {
+        url: "https://backdemet.bskcfv.online",
+        description: "Servidor de producción"
+      }
     ],
   },
   apis: ["./routes/*.js"],
