@@ -164,5 +164,5 @@ http://localhost:3002/reference
 
 <p align="center">
   <b><a href="https://github.com/bskcfv" target="_blank">Cristian Valderrama</a></b><br/>
-  Backend Developer – Proyecto personal
+  Backend Developer
 </p>
